@@ -1,0 +1,194 @@
+import os
+from pathlib import Path
+
+print("🔄 جاري إنشاء هيكل المشروع بالكامل تلقائيا...")
+print("=" * 70)
+
+# 📋 قائمة كاملة بكل المجلدات والملفات
+project_structure = [
+
+    # الملفات الجذر
+    "main.py",
+    "requirements.txt",
+    "setup.py",
+    "README.md",
+    "test_db.py",
+
+    # config
+    "config/__init__.py",
+    "config/settings.py",
+    "config/constants.py",
+    "config/themes.py",
+
+    # database
+    "database/__init__.py",
+    "database/db_manager.py",
+    "database/models.py",
+    "database/migrations.py",
+    "database/seed_data.py",
+
+    # controllers
+    "controllers/__init__.py",
+    "controllers/auth_controller.py",
+    "controllers/property_controller.py",
+    "controllers/client_controller.py",
+    "controllers/sales_controller.py",
+    "controllers/rental_controller.py",
+    "controllers/contract_controller.py",
+    "controllers/report_controller.py",
+    "controllers/notification_controller.py",
+    "controllers/backup_controller.py",
+
+    # views
+    "views/__init__.py",
+    "views/main_window.py",
+    "views/login_view.py",
+    "views/dashboard_view.py",
+    "views/sidebar.py",
+
+    "views/properties/__init__.py",
+    "views/properties/property_list.py",
+    "views/properties/property_form.py",
+    "views/properties/property_details.py",
+    "views/properties/property_search.py",
+
+    "views/clients/__init__.py",
+    "views/clients/client_list.py",
+    "views/clients/client_form.py",
+    "views/clients/client_details.py",
+
+    "views/sales/__init__.py",
+    "views/sales/sales_list.py",
+    "views/sales/sales_form.py",
+    "views/sales/profit_view.py",
+
+    "views/rentals/__init__.py",
+    "views/rentals/rental_list.py",
+    "views/rentals/rental_form.py",
+    "views/rentals/payment_tracker.py",
+
+    "views/contracts/__init__.py",
+    "views/contracts/contract_list.py",
+    "views/contracts/contract_editor.py",
+    "views/contracts/contract_templates.py",
+    "views/contracts/contract_preview.py",
+
+    "views/reports/__init__.py",
+    "views/reports/report_generator.py",
+    "views/reports/charts_view.py",
+    "views/reports/export_dialog.py",
+
+    "views/users/__init__.py",
+    "views/users/user_list.py",
+    "views/users/user_form.py",
+    "views/users/permissions_view.py",
+
+    "views/notifications/__init__.py",
+    "views/notifications/notification_panel.py",
+    "views/notifications/notification_popup.py",
+
+    "views/settings/__init__.py",
+    "views/settings/general_settings.py",
+    "views/settings/backup_view.py",
+    "views/settings/theme_settings.py",
+
+    "views/dialogs/__init__.py",
+    "views/dialogs/confirm_dialog.py",
+    "views/dialogs/image_viewer.py",
+    "views/dialogs/about_dialog.py",
+
+    # widgets
+    "widgets/__init__.py",
+    "widgets/stat_card.py",
+    "widgets/search_bar.py",
+    "widgets/data_table.py",
+    "widgets/image_gallery.py",
+    "widgets/chart_widget.py",
+    "widgets/signature_pad.py",
+    "widgets/date_picker_hijri.py",
+
+    # utils
+    "utils/__init__.py",
+    "utils/logger.py",
+    "utils/validators.py",
+    "utils/formatters.py",
+    "utils/encryption.py",
+    "utils/image_handler.py",
+    "utils/pdf_generator.py",
+    "utils/excel_generator.py",
+    "utils/word_generator.py",
+    "utils/csv_handler.py",
+    "utils/backup_manager.py",
+    "utils/printer.py",
+
+    # resources
+    "resources/icons/.gitkeep",
+    "resources/images/.gitkeep",
+    "resources/fonts/.gitkeep",
+    "resources/templates/.gitkeep",
+    "resources/styles/.gitkeep",
+
+    # translations
+    "translations/ar.json",
+    "translations/en.json",
+
+    # data
+    "data/db/.gitkeep",
+    "data/backups/.gitkeep",
+    "data/exports/.gitkeep",
+    "data/uploads/properties/.gitkeep",
+    "data/logs/.gitkeep",
+
+    # tests
+    "tests/__init__.py",
+    "tests/test_database.py",
+    "tests/test_properties.py",
+    "tests/test_clients.py",
+    "tests/test_sales.py",
+    "tests/test_rentals.py",
+    "tests/test_contracts.py",
+]
+
+created_folders = 0
+created_files = 0
+skipped_files = 0
+
+# انشاء كل المجلدات اولا
+all_folders = list(set([str(Path(file).parent) for file in project_structure]))
+all_folders.sort()
+
+print("\n📁 جاري انشاء المجلدات...")
+for folder in all_folders:
+    Path(folder).mkdir(parents=True, exist_ok=True)
+    created_folders += 1
+    print(f"✅ {folder}")
+
+print(f"\n✅ تم انشاء {created_folders} مجلد بنجاح")
+print("\n📄 جاري انشاء الملفات...")
+
+# انشاء كل الملفات
+for file_path in project_structure:
+    path = Path(file_path)
+    
+    if path.exists():
+        skipped_files +=1
+        continue
+    
+    # انشاء الملف فارغ
+    path.touch()
+    
+    # اضافة __init__.py افتراضي
+    if path.name == "__init__.py":
+        path.write_text(f'"""\n{path.parent}\n"""\n', encoding='utf-8')
+    
+    created_files +=1
+    print(f"✅ {file_path}")
+
+print("=" * 70)
+print("✅ 🎉 تم اكتمال انشاء هيكل المشروع بالكامل!")
+print("=" * 70)
+print(f"📁 عدد المجلدات المنشأة: {created_folders}")
+print(f"📄 عدد الملفات المنشأة: {created_files}")
+print(f"⏭️ عدد الملفات الموجودة بالفعل: {skipped_files}")
+print("\n💡 الان كل المجلدات والملفات جاهزة في مكانها الصحيح.")
+print("💡 يمكنك الان البدء بنسخ الكود الذي كتبناه فوق داخل كل ملف.")
